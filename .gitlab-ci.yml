@@ -16,6 +16,7 @@ cache:
    - .m2/repository
 
 include:
+  - local: clientui/.gitlab-ci.yml
   - local: microservice-commandes/.gitlab-ci.yml
   - local: microservice-paiement/.gitlab-ci.yml
   - local: microservice-produits/.gitlab-ci.yml
