@@ -1,0 +1,6 @@
+.paiement-module:
+  variables:
+    MODULE: "microservice-paiement"
+  only:
+    changes:
+    - "microservice-paiement/**/*"
