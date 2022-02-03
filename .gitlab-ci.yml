@@ -39,9 +39,8 @@ include:
   stage: Build
   script:
   - echo "Building $MODULE"
-  - mvn -pl $MODULE clean compile --also-make
+  - mvn -pl $MODULE clean package --also-make
   artifacts:
-    expire_in: 10 min
     paths:
     - "*/target"
 
