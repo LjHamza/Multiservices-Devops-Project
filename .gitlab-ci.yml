@@ -3,6 +3,7 @@ image: maven:3.8.4-jdk-8
 stages:
 - Build
 - Test
+- Create Docker Image
 
 variables:
   MAVEN_OPTS: "-Dmaven.repo.local=$CI_PROJECT_DIR/.m2/repository"
@@ -37,6 +38,12 @@ include:
     expire_in: 10 min
     paths:
     - "*/target"
+
+.create-image:
+  stage: Create Docker Image
+  script:
+    - echo "Creating Docker Images"
+    - docker build -t h4mz4/$MODULE:1.0 ./$MODULE
 
 # BUILD JOBS
 build-clientui-module:
@@ -80,3 +87,25 @@ test-produit-module:
   extends:
    - .produit-module
    - .test-module
+
+
+# Create Docker Image
+
+create-clientui-image:
+  extends:
+    - .clientui-module
+    - .create-image
+
+create-commande-image:
+  extends:
+    - .commande-module
+    - .create-image
+
+create-paiement-image:
+  extends:
+    - .paiement-module
+    - .create-image
+create-produit-image:
+  extends:
+    - .produit-module
+    - .create-image
