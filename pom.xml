@@ -15,6 +15,7 @@
 
 
     <modules>
+        <module>clientui</module>
         <module>microservice-commandes</module>
         <module>microservice-paiement</module>
         <module>microservice-produits</module>
