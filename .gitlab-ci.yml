@@ -40,6 +40,7 @@ include:
     - "*/target"
 
 .create-image:
+  image: docker:latest
   stage: Create Docker Image
   script:
     - echo "Creating Docker Images"
