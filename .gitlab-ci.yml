@@ -63,7 +63,7 @@ build-produit-module:
 test-clientui-module:
   extends:
   - .clientui-module
-  - .build-module
+  - .test-module
 
 test-commande-module:
   extends:
