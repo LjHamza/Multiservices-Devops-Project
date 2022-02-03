@@ -45,17 +45,15 @@ include:
     - "*/target"
 
 .create-image:
-  image: docker:latest
   stage: Create Docker Image
   script:
     - echo "Creating Docker Images"
     - docker build -t h4mz4/$MODULE:1.0 ./$MODULE
 
 .push-image:
-  image: docker:latest
   stage: Push Docker Image
   before-script:
-    - docker login -u $CI_REGISTRY_USER -p $CI_REGISTRY_PASS
+    - docker login -u "$CI_REGISTRY_USER" -p "$CI_REGISTRY_PASS" $CI_REGISTRY
   script:
     - echo "Pushing Docker Images"
     - docker push h4mz4/$MODULE
