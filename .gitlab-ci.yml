@@ -57,7 +57,7 @@ include:
   before-script:
     - docker login -u $CI_REGISTRY_USER -p $CI_REGISTRY_PASS
   script:
-    - echo "Push Docker Images"
+    - echo "Pushing Docker Images"
     - docker push h4mz4/$MODULE
 
 # BUILD JOBS
@@ -124,3 +124,24 @@ create-produit-image:
   extends:
     - .produit-module
     - .create-image
+
+# Push Docker Image
+
+push-clientui-image:
+  extends:
+    - .clientui-module
+    - .push-image
+
+push-commande-image:
+  extends:
+    - .commande-module
+    - .push-image
+
+push-paiement-image:
+  extends:
+    - .paiement-module
+    - .push-image
+push-produit-image:
+  extends:
+    - .produit-module
+    - .push-image
