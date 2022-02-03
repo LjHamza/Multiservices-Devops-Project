@@ -1,0 +1,6 @@
+.clientui-module:
+  variables:
+    MODULE: "clientui"
+  only:
+    changes:
+    - "clientui/**/*"
