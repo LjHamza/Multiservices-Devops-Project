@@ -1,0 +1,70 @@
+image: maven:3.8.4-jdk-8
+
+stages:
+- build
+- test
+
+variables:
+  MAVEN_OPTS: "-Dmaven.repo.local=$CI_PROJECT_DIR/.m2/repository"
+  MAVEN_CLI_OPTS: "--batch-mode --errors --fail-at-end --show-version"
+  CACHE_KEY: $CI_COMMIT_REF_SLUG
+
+
+cache:
+  key: $CACHE_KEY
+  paths:
+   - .m2/repository
+
+include:
+  - local: microservice-commandes/.gitlab-ci.yml
+  - local: microservice-paiement/.gitlab-ci.yml
+  - local: microservice-produits/.gitlab-ci.yml
+
+
+.test-module:
+  stage: test
+  script:
+   - echo "Testing $MODULE"
+   - mvn $MAVEN_CLI_OPTS -pl $MODULE test --also-make
+
+.build-module:
+  stage: build
+  script:
+  - echo "Building $MODULE"
+  - mvn -pl $MODULE clean compile --also-make
+  artifacts:
+    expire_in: 10 min
+    paths:
+    - "*/target"
+
+# BUILD JOBS
+build-commande-module:
+  extends:
+  - .commande-module
+  - .build-module
+
+build-paiement-module:
+  extends:
+  - .paiement-module
+  - .build-module
+
+build-produit-module:
+  extends:
+  - .produit-module
+  - .build-module
+
+# TEST JOBS
+test-commande-module:
+  extends:
+  - .commande-module
+  - .test-module
+
+test-paiement-module:
+  extends:
+    - .paiement-module
+    - .test-module
+
+test-produit-module:
+  extends:
+   - .produit-module
+   - .test-module
