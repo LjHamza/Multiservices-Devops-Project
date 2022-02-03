@@ -1,4 +1,5 @@
 FROM maven:3.8.4-jdk-8
+WORKDIR /app
+COPY target/*.jar /app/mcommandes.jar
 EXPOSE 9002
-ADD target/mcommandes.jar mcommandes.jar
 ENTRYPOINT ["java", "-jar", "mcommandes.jar"]
