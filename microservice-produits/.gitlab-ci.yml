@@ -1,0 +1,6 @@
+.produit-module:
+  variables:
+    MODULE: "microservice-produits"
+  only:
+    changes:
+    - "microservice-produits/**/*"
