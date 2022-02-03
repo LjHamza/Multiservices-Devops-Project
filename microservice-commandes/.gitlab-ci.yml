@@ -1,0 +1,6 @@
+.commande-module:
+  variables:
+    MODULE: "microservice-commandes"
+  only:
+    changes:
+    - "microservice-commandes/**/*"
