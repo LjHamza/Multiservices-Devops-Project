@@ -48,7 +48,7 @@ include:
   stage: Create Docker Image
   script:
     - echo "Creating Docker Images"
-    - docker build -t h4mz4/$MODULE:1.0 ./$MODULE
+    - docker build -t h4mz4/$MODULE ./$MODULE
 
 .push-image:
   stage: Push Docker Image
