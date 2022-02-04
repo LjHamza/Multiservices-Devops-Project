@@ -6,8 +6,7 @@ services:
 stages:
 - Build
 - Test
-- Create Docker Image
-- Push Docker Image
+- Build and Push Docker Image
 
 variables:
   MAVEN_OPTS: "-Dmaven.repo.local=$CI_PROJECT_DIR/.m2/repository"
@@ -44,18 +43,13 @@ include:
     paths:
     - "*/target"
 
-.create-image:
-  stage: Create Docker Image
-  script:
-    - echo "Creating Docker Images"
-    - docker build -t h4mz4/$MODULE ./$MODULE
-
 .push-image:
-  stage: Push Docker Image
+  stage: Build and Push Docker Image
   before_script:
-    - docker login -u "$CI_REGISTRY_USER" -p "$CI_REGISTRY_PASS" $CI_REGISTRY
+    - echo $CI_REGISTRY_PASS | docker login -u $CI_REGISTRY_USER $CI_REGISTRY --password-stdin
   script:
-    - echo "Pushing Docker Images"
+    - echo "Building and Pushing Docker Images"
+    - docker build -t h4mz4/$MODULE ./$MODULE
     - docker push h4mz4/$MODULE
 
 # BUILD JOBS
@@ -100,28 +94,6 @@ test-produit-module:
   extends:
    - .produit-module
    - .test-module
-
-
-# Create Docker Image
-
-create-clientui-image:
-  extends:
-    - .clientui-module
-    - .create-image
-
-create-commande-image:
-  extends:
-    - .commande-module
-    - .create-image
-
-create-paiement-image:
-  extends:
-    - .paiement-module
-    - .create-image
-create-produit-image:
-  extends:
-    - .produit-module
-    - .create-image
 
 # Push Docker Image
 
