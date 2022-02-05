@@ -1,6 +1,4 @@
 .commande-module:
-  include:
-    - template: Security/SAST.gitlab-ci.yml
   variables:
     MODULE: "microservice-commandes"
   only:
