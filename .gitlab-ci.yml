@@ -13,7 +13,6 @@ variables:
   MAVEN_CLI_OPTS: "--batch-mode --errors --fail-at-end --show-version"
   CACHE_KEY: $CI_COMMIT_REF_SLUG
 
-
 cache:
   key: $CACHE_KEY
   paths:
@@ -24,7 +23,7 @@ include:
   - local: microservice-commandes/.gitlab-ci.yml
   - local: microservice-paiement/.gitlab-ci.yml
   - local: microservice-produits/.gitlab-ci.yml
-
+  - template: Security/SAST.gitlab-ci.yml
 
 .test-module:
   stage: Test
