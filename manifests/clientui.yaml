@@ -16,7 +16,7 @@ spec:
     spec:
       containers:
       - name: clientui
-        image: h4mz4/microservice-clientui
+        image: h4mz4/clientui
         ports:
         - containerPort: 8080
         env:
