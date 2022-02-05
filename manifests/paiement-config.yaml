@@ -3,4 +3,4 @@ kind: ConfigMap
 metadata:
   name: paiement-config
 data:
-  paiement_url: paiement-service
+  paiement_url: paiement

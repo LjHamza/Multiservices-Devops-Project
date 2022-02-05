@@ -23,7 +23,7 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  name: commande-service
+  name: commande
 spec:
   selector:
     app: commande

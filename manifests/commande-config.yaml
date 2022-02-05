@@ -3,4 +3,4 @@ kind: ConfigMap
 metadata:
   name: commande-config
 data:
-  commande_url: commande-service
+  commande_url: commande
