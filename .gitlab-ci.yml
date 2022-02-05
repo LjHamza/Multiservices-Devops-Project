@@ -5,6 +5,7 @@ services:
 
 stages:
 - Build
+- Test
 - test
 - Build and Push Docker Image
 
@@ -23,13 +24,6 @@ include:
   - local: microservice-commandes/.gitlab-ci.yml
   - local: microservice-paiement/.gitlab-ci.yml
   - local: microservice-produits/.gitlab-ci.yml
-  - template: Security/SAST.gitlab-ci.yml
-
-.test-module:
-  stage: test
-  script:
-   - echo "Testing $MODULE"
-   - mvn $MAVEN_CLI_OPTS -pl $MODULE test --also-make
 
 .build-module:
   stage: Build
@@ -39,6 +33,12 @@ include:
   artifacts:
     paths:
     - "*/target"
+
+.test-module:
+  stage: Test
+  script:
+   - echo "Testing $MODULE"
+   - mvn $MAVEN_CLI_OPTS -pl $MODULE test --also-make
 
 .push-image:
   image: docker:latest
