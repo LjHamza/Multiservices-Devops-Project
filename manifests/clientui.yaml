@@ -22,17 +22,17 @@ spec:
         env:
         - name: commande_url
           valueFrom:
-            ConfigMapKeyRef:
+            configMapKeyRef:
               name: commande-config
               key: commande_url
         - name: produit_url
           valueFrom:
-            ConfigMapKeyRef:
+            configMapKeyRef:
               name: produit-config
               key: produit_url
         - name: paiement_url
           valueFrom:
-            ConfigMapKeyRef:
+            configMapKeyRef:
               name: paiement-config
               key: paiement_url
 ---
