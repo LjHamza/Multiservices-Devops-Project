@@ -5,7 +5,7 @@ services:
 
 stages:
 - Build
-- Test
+- test
 - Build and Push Docker Image
 
 variables:
@@ -26,7 +26,7 @@ include:
   - template: Security/SAST.gitlab-ci.yml
 
 .test-module:
-  stage: Test
+  stage: test
   script:
    - echo "Testing $MODULE"
    - mvn $MAVEN_CLI_OPTS -pl $MODULE test --also-make
