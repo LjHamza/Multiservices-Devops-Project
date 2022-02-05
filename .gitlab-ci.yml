@@ -1,4 +1,4 @@
-image: docker:latest
+image: maven:3.8.4-jdk-8
 
 services:
   - docker:dind
@@ -27,14 +27,12 @@ include:
 
 
 .test-module:
-  image: maven:3.8.4-jdk-8
   stage: Test
   script:
    - echo "Testing $MODULE"
    - mvn $MAVEN_CLI_OPTS -pl $MODULE test --also-make
 
 .build-module:
-  image: maven:3.8.4-jdk-8
   stage: Build
   script:
   - echo "Building $MODULE"
@@ -44,6 +42,7 @@ include:
     - "*/target"
 
 .push-image:
+  image: docker:latest
   stage: Build and Push Docker Image
   before_script:
     - echo $CI_REGISTRY_PASS | docker login -u $CI_REGISTRY_USER $CI_REGISTRY --password-stdin
