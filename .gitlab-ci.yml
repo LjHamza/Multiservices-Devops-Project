@@ -13,6 +13,7 @@ variables:
   MAVEN_OPTS: "-Dmaven.repo.local=$CI_PROJECT_DIR/.m2/repository"
   MAVEN_CLI_OPTS: "--batch-mode --errors --fail-at-end --show-version"
   CACHE_KEY: $CI_COMMIT_REF_SLUG
+  SCAN_KUBERNETES_MANIFESTS: "true"
 
 cache:
   key: $CACHE_KEY
@@ -24,6 +25,7 @@ include:
   - local: microservice-commandes/.gitlab-ci.yml
   - local: microservice-paiement/.gitlab-ci.yml
   - local: microservice-produits/.gitlab-ci.yml
+  - template: Security/SAST.gitlab-ci.yml
 
 .build-module:
   stage: Build
