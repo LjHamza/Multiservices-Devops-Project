@@ -53,10 +53,7 @@ cache:
     - docker build -t h4mz4/$MODULE ./$MODULE
     - docker push h4mz4/$MODULE
 
-.container_scanning:
-  stage: test
-  variables:
-    DOCKER_IMAGE: h4mz4/$MODULE
+
 
 # BUILD JOBS
 build-clientui-module:
@@ -123,25 +120,31 @@ push-produit-image:
     - .push-image
 
 # Container Scanning
+container_scanning:
+  stage: test
+  variables:
+    DOCKER_IMAGE: h4mz4/$MODULE
+
 clientui_scanning:
   extends:
-    - .clientui-module
-    - .container_scanning
+    - container_scanning
+  variables:
+    DOCKER_IMAGE: h4mz4/clientui
 
 commande_scanning:
   extends:
     - .commande-module
-    - .container_scanning
+    - container_scanning
 
 paiement_scanning:
   extends:
     - .paiement-module
-    - .container_scanning
+    - container_scanning
 
 produit_scanning:
   extends:
     - .produit-module
-    - .container_scanning
+    - container_scanning
 
 # Deploy
 deploy:
