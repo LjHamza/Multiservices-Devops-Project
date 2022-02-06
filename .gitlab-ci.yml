@@ -12,7 +12,7 @@ deploy:
  script:
    - echo "$SERVICE_ACCOUNT_KEY" > key.json
    - gcloud auth activate-service-account --key-file=key.json
-   - gcloud config set project Devops
+   - gcloud config set project devops-340313 
    - gcloud config set container/cluster cluster
    - gcloud config set compute/zone us-central1-c
    - gcloud container clusters get-credentials cluster --zone us-central1-c 	 --project Devops
