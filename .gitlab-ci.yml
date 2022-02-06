@@ -4,112 +4,19 @@ services:
   - docker:dind
 
 stages:
-- Build
-- Test
-- Build and Push Docker Image
-
-variables:
-  MAVEN_OPTS: "-Dmaven.repo.local=$CI_PROJECT_DIR/.m2/repository"
-  MAVEN_CLI_OPTS: "--batch-mode --errors --fail-at-end --show-version"
-  CACHE_KEY: $CI_COMMIT_REF_SLUG
-  SCAN_KUBERNETES_MANIFESTS: "true"
-
-cache:
-  key: $CACHE_KEY
-  paths:
-   - .m2/repository
-
-include:
-  - local: clientui/.gitlab-ci.yml
-  - local: microservice-commandes/.gitlab-ci.yml
-  - local: microservice-paiement/.gitlab-ci.yml
-  - local: microservice-produits/.gitlab-ci.yml
-
-.build-module:
-  stage: Build
-  script:
-  - echo "Building $MODULE"
-  - mvn -pl $MODULE clean package --also-make
-  artifacts:
-    paths:
-    - "*/target"
-
-.test-module:
-  stage: Test
-  script:
-   - echo "Testing $MODULE"
-   - mvn $MAVEN_CLI_OPTS -pl $MODULE test --also-make
-
-.push-image:
-  image: docker:latest
-  stage: Build and Push Docker Image
-  before_script:
-    - echo $CI_REGISTRY_PASS | docker login -u $CI_REGISTRY_USER $CI_REGISTRY --password-stdin
-  script:
-    - echo "Building and Pushing Docker Images"
-    - docker build -t h4mz4/$MODULE ./$MODULE
-    - docker push h4mz4/$MODULE
-
-# BUILD JOBS
-build-clientui-module:
-  extends:
-  - .clientui-module
-  - .build-module
-
-build-commande-module:
-  extends:
-  - .commande-module
-  - .build-module
-
-build-paiement-module:
-  extends:
-  - .paiement-module
-  - .build-module
-
-build-produit-module:
-  extends:
-  - .produit-module
-  - .build-module
-
-# TEST JOBS
-
-test-clientui-module:
-  extends:
-  - .clientui-module
-  - .test-module
-
-test-commande-module:
-  extends:
-  - .commande-module
-  - .test-module
-
-test-paiement-module:
-  extends:
-    - .paiement-module
-    - .test-module
-
-test-produit-module:
-  extends:
-   - .produit-module
-   - .test-module
-
-# Push Docker Image
-
-push-clientui-image:
-  extends:
-    - .clientui-module
-    - .push-image
-
-push-commande-image:
-  extends:
-    - .commande-module
-    - .push-image
-
-push-paiement-image:
-  extends:
-    - .paiement-module
-    - .push-image
-push-produit-image:
-  extends:
-    - .produit-module
-    - .push-image
+  - Deploy
+# Deploy
+deploy:
+ stage: Deploy
+ image: google/cloud-sdk
+ script:
+   - echo "$SERVICE_ACCOUNT_KEY" > key.json
+   - gcloud auth activate-service-account --key-file=key.json
+   - gcloud config set project Devops
+   - gcloud config set container/cluster cluster
+   - gcloud config set compute/zone us-central1-c
+   - gcloud container clusters get-credentials cluster --zone us-central1-c 	 --project Devops
+   - kubectl apply -f manifests/produit.yaml
+   - kubectl apply -f manifests/commande.yaml
+   - kubectl apply -f manifests/paiement.yaml
+   - kubectl apply -f manifests/clientui.yaml
