@@ -25,6 +25,7 @@ kind: Service
 metadata:
   name: paiement
 spec:
+  type: LoadBalancer
   selector:
     app: paiement
   ports:

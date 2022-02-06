@@ -25,6 +25,7 @@ kind: Service
 metadata:
   name: commande
 spec:
+  type: LoadBalancer
   selector:
     app: commande
   ports:

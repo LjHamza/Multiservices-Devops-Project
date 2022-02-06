@@ -19,33 +19,16 @@ spec:
         image: h4mz4/clientui
         ports:
         - containerPort: 8080
-        env:
-        - name: commande_url
-          valueFrom:
-            configMapKeyRef:
-              name: commande-config
-              key: commande_url
-        - name: produit_url
-          valueFrom:
-            configMapKeyRef:
-              name: produit-config
-              key: produit_url
-        - name: paiement_url
-          valueFrom:
-            configMapKeyRef:
-              name: paiement-config
-              key: paiement_url
 ---
 apiVersion: v1
 kind: Service
 metadata:
-  name: clientui-service
+  name: clientui
 spec:
-  type: NodePort
+  type: LoadBalancer
   selector:
     app: clientui
   ports:
     - protocol: TCP
       port: 8080
       targetPort: 8080
-      nodePort: 30100

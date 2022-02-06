@@ -25,6 +25,7 @@ kind: Service
 metadata:
   name: produit
 spec:
+  type: LoadBalancer
   selector:
     app: produit
   ports:
