@@ -119,10 +119,25 @@ push-produit-image:
 
 # Container Scanning
 
-container_scanning:
+clientui_scanning:
   stage: test
   variables:
     DOCKER_IMAGE: h4mz4/clientui
+
+commande_scanning:
+  stage: test
+  variables:
+    DOCKER_IMAGE: h4mz4/microservice-commandes
+
+paiement_scanning:
+  stage: test
+  variables:
+    DOCKER_IMAGE: h4mz4/microservice-paiement
+
+produit_scanning:
+  stage: test
+  variables:
+    DOCKER_IMAGE: h4mz4/microservice-produits
 
 # Deploy
 deploy:
