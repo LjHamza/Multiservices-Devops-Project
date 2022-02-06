@@ -133,18 +133,21 @@ clientui_scanning:
 
 commande_scanning:
   extends:
-    - .commande-module
     - container_scanning
+  variables:
+    DOCKER_IMAGE: h4mz4/microservice-commandes
 
 paiement_scanning:
   extends:
-    - .paiement-module
     - container_scanning
+  variables:
+    DOCKER_IMAGE: h4mz4/microservice-paiement
 
 produit_scanning:
   extends:
-    - .produit-module
     - container_scanning
+  variables:
+    DOCKER_IMAGE: h4mz4/microservice-produits
 
 # Deploy
 deploy:
