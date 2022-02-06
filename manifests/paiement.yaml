@@ -5,7 +5,7 @@ metadata:
   labels:
     app: paiement
 spec:
-  replicas: 2
+  replicas: 1
   selector:
     matchLabels:
       app: paiement
@@ -30,5 +30,5 @@ spec:
     app: paiement
   ports:
     - protocol: TCP
-      port: 9003
+      port: 80
       targetPort: 9003
