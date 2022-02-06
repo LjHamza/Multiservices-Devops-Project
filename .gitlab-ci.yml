@@ -17,6 +17,7 @@ include:
   - local: microservice-produits/.gitlab-ci.yml
   - template: Security/SAST.gitlab-ci.yml
   - template: Security/Container-Scanning.gitlab-ci.yml
+  - template: DAST.gitlab-ci.yml
 
 variables:
   MAVEN_OPTS: "-Dmaven.repo.local=$CI_PROJECT_DIR/.m2/repository"
@@ -77,7 +78,6 @@ build-produit-module:
   - .build-module
 
 # TEST JOBS
-
 test-clientui-module:
   extends:
   - .clientui-module
@@ -99,7 +99,6 @@ test-produit-module:
    - .test-module
 
 # Push Docker Image
-
 push-clientui-image:
   extends:
     - .clientui-module
@@ -158,3 +157,8 @@ deploy:
    - kubectl apply -f manifests/commande.yaml
    - kubectl apply -f manifests/paiement.yaml
    - kubectl apply -f manifests/clientui.yaml
+
+# DAST 
+dast:
+  variables:
+    DAST_WEBSITE: http://35.232.13.225/
