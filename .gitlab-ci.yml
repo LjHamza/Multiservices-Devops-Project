@@ -123,12 +123,6 @@ push-produit-image:
 container_scanning:
   stage: test
   variables:
-    DOCKER_IMAGE: h4mz4/$MODULE
-
-clientui_scanning:
-  extends:
-    - container_scanning
-  variables:
     DOCKER_IMAGE: h4mz4/clientui
 
 commande_scanning:
