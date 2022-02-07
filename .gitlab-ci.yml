@@ -16,6 +16,7 @@ include:
   - local: microservice-commandes/.gitlab-ci.yml
   - local: microservice-paiement/.gitlab-ci.yml
   - local: microservice-produits/.gitlab-ci.yml
+  - template: Security/SAST.gitlab-ci.yml
   - template: Security/Container-Scanning.gitlab-ci.yml
   - template: DAST.gitlab-ci.yml
 
