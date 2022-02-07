@@ -161,5 +161,8 @@ deploy:
 
 # DAST 
 dast:
+  image: docker:latest
+  services: 
+    - docker:dind
   variables:
     DAST_WEBSITE: http://35.232.13.225/
