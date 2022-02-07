@@ -18,7 +18,7 @@ include:
   - local: microservice-produits/.gitlab-ci.yml
   - template: Security/SAST.gitlab-ci.yml
   - template: Security/Container-Scanning.gitlab-ci.yml
-  - template: Security/DAST.gitlab-ci.yml
+  - template: DAST.gitlab-ci.yml
 
 variables:
   MAVEN_OPTS: "-Dmaven.repo.local=$CI_PROJECT_DIR/.m2/repository"
