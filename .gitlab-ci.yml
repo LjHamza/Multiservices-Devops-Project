@@ -123,7 +123,7 @@ push-produit-image:
 # Spotbugs-Sast
 spotbugs-sast:
   dependencies:
-    - Build
+    - build-produit-module
   variables:
     MAVEN_REPO_PATH: ./.m2/repository
     COMPILE: "false"
