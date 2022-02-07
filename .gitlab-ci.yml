@@ -36,6 +36,7 @@ cache:
   - mvn -pl $MODULE clean package --also-make
   artifacts:
     paths:
+    - .m2/
     - "*/target"
 
 .test-module:
@@ -117,6 +118,17 @@ push-produit-image:
   extends:
     - .produit-module
     - .push-image
+
+# Spotbugs-Sast
+spotbugs-sast:
+  dependencies:
+    - Build
+  variables:
+    MAVEN_REPO_PATH: ./.m2/repository
+    COMPILE: "false"
+  artifacts:
+    reports:
+      sast: gl-sast-report.json 
 
 # Container Scanning
 container_scanning:
