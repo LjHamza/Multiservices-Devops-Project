@@ -177,4 +177,4 @@ dast:
   services: 
     - docker:dind
   variables:
-    DAST_WEBSITE: google.com
+    DAST_WEBSITE: http://35.232.13.225/
